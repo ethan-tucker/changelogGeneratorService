@@ -16,7 +16,7 @@ dotenv.config();
 const app = express();
 const allowedOrigins = [
     'http://localhost:3000',     // Local development
-    FRONTEND_URL  // Your deployed frontend domain
+    process.env.FRONTEND_URL  // Your deployed frontend domain
   ];
   
   app.use(cors({
