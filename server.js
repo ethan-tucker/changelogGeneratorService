@@ -14,6 +14,7 @@ const __dirname = dirname(__filename);
 dotenv.config();
 
 const app = express();
+app.use(express.json());
 const allowedOrigins = [
     'http://localhost:3000',     // Local development
     process.env.FRONTEND_URL  // Your deployed frontend domain
