@@ -14,8 +14,24 @@ const __dirname = dirname(__filename);
 dotenv.config();
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+const allowedOrigins = [
+    'http://localhost:3000',     // Local development
+    FRONTEND_URL  // Your deployed frontend domain
+  ];
+  
+  app.use(cors({
+    origin: function(origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    credentials: true
+  }));
 
 // Initialize clients
 const octokit = new Octokit({
